@@ -6,6 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const notes = await Note.find({}).exec();
   console.log(notes);
+  res.send(notes);
 });
 
 export default router;
