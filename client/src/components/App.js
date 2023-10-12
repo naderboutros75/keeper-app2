@@ -9,19 +9,23 @@ function App() {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    async function fetchNotes() {
-      try {
-        const response = await axios.get("http://localhost:4000/"); // Replace with your server's URL
+    let processing = true;
+    axiosFetchNotes(processing);
+    return () => {
+      processing = false;
+    };
+  }, []);
 
-        setNotes(response.data);
-        console.log(notes);
-      } catch (error) {
-        console.error("Error fetching notes:", error);
-      }
-    }
-
-    fetchNotes(); // Call the fetchNotes function when the component mounts
-  }, [notes]);
+  const axiosFetchNotes = async (processing) => {
+    await axios
+      .get("http://localhost:4000/")
+      .then((respone) => {
+        if (processing) {
+          setNotes(respone.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   function addNote(newNote) {
     setNotes((prevNotes) => {
