@@ -28,17 +28,40 @@ function App() {
   };
 
   function addNote(newNote) {
-    setNotes((prevNotes) => {
-      return [...prevNotes, newNote];
-    });
+    // Send a POST request to the server to add a new note
+    axios
+      .post("http://localhost:4000/add-note", newNote) // Change the endpoint as per your backend setup
+      .then((response) => {
+        // Handle the response from the server, which might include the newly added note
+        if (response.data) {
+          setNotes((prevNotes) => [...prevNotes, response.data]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding a note:", error);
+      });
   }
 
+  // function deleteNote(id) {
+  //   setNotes((prevNotes) => {
+  //     return prevNotes.filter((noteItem, index) => {
+  //       return index !== id;
+  //     });
+  //   });
+  // }
+
   function deleteNote(id) {
-    setNotes((prevNotes) => {
-      return prevNotes.filter((noteItem, index) => {
-        return index !== id;
+    // Send a DELETE request to the server to delete the note
+    axios
+      .delete(`http://localhost:4000/delete-note/${id}`) // Change the endpoint as per your backend setup
+      .then(() => {
+        setNotes((prevNotes) =>
+          prevNotes.filter((noteItem) => noteItem._id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting the note:", error);
       });
-    });
   }
 
   return (

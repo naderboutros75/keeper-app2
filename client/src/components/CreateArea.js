@@ -22,12 +22,14 @@ function CreateArea(props) {
   }
 
   function submitNote(event) {
-    props.onAdd(note);
-    setNote({
-      title: "",
-      content: "",
-    });
-    event.preventDefault();
+    if (note.title.trim() !== "" || note.content.trim() !== "") {
+      props.onAdd(note);
+      setNote({
+        title: "",
+        content: "",
+      });
+      event.preventDefault();
+    }
   }
 
   function expand() {
