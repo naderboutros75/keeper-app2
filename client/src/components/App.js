@@ -42,14 +42,6 @@ function App() {
       });
   }
 
-  // function deleteNote(id) {
-  //   setNotes((prevNotes) => {
-  //     return prevNotes.filter((noteItem, index) => {
-  //       return index !== id;
-  //     });
-  //   });
-  // }
-
   function deleteNote(id) {
     // Send a DELETE request to the server to delete the note
     axios
