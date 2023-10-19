@@ -5,6 +5,8 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_API_URL || "/"; // Use the API URL from environment variables or the relative path '/'
+
 function App() {
   const [notes, setNotes] = useState([]);
 
@@ -18,7 +20,7 @@ function App() {
 
   const axiosFetchNotes = async (processing) => {
     await axios
-      .get("http://localhost:4000/")
+      .get(apiUrl)
       .then((respone) => {
         if (processing) {
           setNotes(respone.data);
@@ -30,7 +32,7 @@ function App() {
   function addNote(newNote) {
     // Send a POST request to the server to add a new note
     axios
-      .post("http://localhost:4000/add-note", newNote) // Change the endpoint as per your backend setup
+      .post(`${apiUrl}add-note`, newNote) // Change the endpoint as per your backend setup
       .then((response) => {
         // Handle the response from the server, which might include the newly added note
         if (response.data) {
